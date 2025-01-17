@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 public class Account {
     @Id
     private Integer id;
-    private BigDecimal balance;
     @ManyToOne
     @JoinColumn(name = "account_status_id")
     private AccountStatus accountStatus;
