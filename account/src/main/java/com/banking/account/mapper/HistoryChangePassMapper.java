@@ -20,7 +20,7 @@ public class HistoryChangePassMapper {
         historyChangePass.setOldPass(dto.getOldPass());
         historyChangePass.setNewPass(dto.getNewPass());
         // You will need to fetch the Auth entity by its id
-        // historyChangePass.setAuth(auth);
+//         historyChangePass.setAuth(auth);
         historyChangePass.setDateChange(dto.getDateChange());
         return historyChangePass;
     }
