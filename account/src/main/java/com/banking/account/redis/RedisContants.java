@@ -10,6 +10,6 @@ public class RedisContants {
     public static final String VERIFICATION_PASSWORD = "useverificationrs_password:string";
     public static final String WHITE_LIST_PASSWORD = "white_list_token:object";
     public static final String VERIFICATION_CHANGE_PASSWORD = "verification_change_password:string";
-
+    public static final String EMAIL_EXIST = "email_exist:string";
 
 }
