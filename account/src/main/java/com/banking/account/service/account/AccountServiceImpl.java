@@ -56,7 +56,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountDTO updateAccount(Integer id, AccountDTO accountDTO) {
         Account account = accountRepository.findById(id)
                 .orElseThrow();
-        account.setBalance(accountDTO.getBalance());
+
         // Update other fields as needed
         Account updatedAccount = accountRepository.save(account);
         return AccountMapper.toDTO(updatedAccount);
@@ -66,7 +66,7 @@ public class AccountServiceImpl implements AccountService {
     public Account updateAccount(Integer id, Account updatedAccount) {
         Account account = accountRepository.findById(id)
                 .orElseThrow();
-        account.setBalance(updatedAccount.getBalance());
+
         // Update other fields as needed
         return accountRepository.save(account);
     }
