@@ -10,6 +10,6 @@ public interface TransactionService {
     List<TransactionDTO> getAllTransactions();
     TransactionDTO getTransactionById(Integer id);
     TransactionDTO createTransaction(TransactionDTO transactionDTO);
-    TransactionDTO updateTransaction(Integer id, TransactionDTO transactionDTO);
+    TransactionDTO updateTransaction(TransactionDTO transactionDTO);
     void deleteTransaction(Integer id);
 }

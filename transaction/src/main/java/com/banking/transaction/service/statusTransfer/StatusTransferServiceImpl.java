@@ -37,8 +37,8 @@ public class StatusTransferServiceImpl implements  StatusTransferService {
     }
 
     @Override
-    public StatusTransferDTO updateStatusTransfer(Integer id, StatusTransferDTO statusTransferDTO) {
-        StatusTransfer statusTransfer = statusTransferRepository.findById(id)
+    public StatusTransferDTO updateStatusTransfer(StatusTransferDTO statusTransferDTO) {
+        StatusTransfer statusTransfer = statusTransferRepository.findById(statusTransferDTO.getId())
                 .orElseThrow();
 
         statusTransfer.setName(statusTransferDTO.getName());

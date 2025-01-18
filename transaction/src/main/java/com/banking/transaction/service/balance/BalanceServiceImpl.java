@@ -36,8 +36,8 @@ public class BalanceServiceImpl implements  BalanceService {
     }
 
     @Override
-    public BalanceDTO updateBalance(Integer id, BalanceDTO balanceDTO) {
-        Balance balance = balanceRepository.findById(id)
+    public BalanceDTO updateBalance(BalanceDTO balanceDTO) {
+        Balance balance = balanceRepository.findById(balanceDTO.getId())
                 .orElseThrow();
 
         balance.setBalance(balanceDTO.getBalance());

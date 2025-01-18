@@ -10,6 +10,6 @@ public interface TransferService {
     List<TransferDTO> getAllTransfers();
     TransferDTO getTransferById(Integer id);
     TransferDTO createTransfer(TransferDTO transferDTO);
-    TransferDTO updateTransfer(Integer id, TransferDTO transferDTO);
+    TransferDTO updateTransfer(TransferDTO transferDTO);
     void deleteTransfer(Integer id);
 }

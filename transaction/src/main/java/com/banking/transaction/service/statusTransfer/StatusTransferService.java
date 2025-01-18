@@ -10,6 +10,6 @@ public interface StatusTransferService {
     List<StatusTransferDTO> getAllStatusTransfers();
     StatusTransferDTO getStatusTransferById(Integer id);
     StatusTransferDTO createStatusTransfer(StatusTransferDTO statusTransferDTO);
-    StatusTransferDTO updateStatusTransfer(Integer id, StatusTransferDTO statusTransferDTO);
+    StatusTransferDTO updateStatusTransfer(StatusTransferDTO statusTransferDTO);
     void deleteStatusTransfer(Integer id);
 }

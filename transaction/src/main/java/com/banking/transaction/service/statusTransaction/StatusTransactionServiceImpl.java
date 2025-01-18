@@ -36,8 +36,8 @@ public class StatusTransactionServiceImpl implements StatusTransactionService {
     }
 
     @Override
-    public StatusTransactionDTO updateStatusTransaction(Integer id, StatusTransactionDTO statusTransactionDTO) {
-        StatusTransaction statusTransaction = statusTransactionRepository.findById(id)
+    public StatusTransactionDTO updateStatusTransaction(StatusTransactionDTO statusTransactionDTO) {
+        StatusTransaction statusTransaction = statusTransactionRepository.findById(statusTransactionDTO.getId())
                 .orElseThrow();
 
         statusTransaction.setName(statusTransactionDTO.getName());

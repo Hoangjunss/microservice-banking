@@ -10,6 +10,6 @@ public interface StatusTransactionService {
     List<StatusTransactionDTO> getAllStatusTransactions();
     StatusTransactionDTO getStatusTransactionById(Integer id);
     StatusTransactionDTO createStatusTransaction(StatusTransactionDTO statusTransactionDTO);
-    StatusTransactionDTO updateStatusTransaction(Integer id, StatusTransactionDTO statusTransactionDTO);
+    StatusTransactionDTO updateStatusTransaction(StatusTransactionDTO statusTransactionDTO);
     void deleteStatusTransaction(Integer id);
 }

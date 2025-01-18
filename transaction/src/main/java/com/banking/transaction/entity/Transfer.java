@@ -3,6 +3,7 @@ package com.banking.transaction.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -15,10 +16,7 @@ public class Transfer {
     private Integer id;
     private Integer idAccountSend;
     private Integer idAccountReceive;
-
-    @ManyToOne
-    @JoinColumn(name = "balance_id")
-    private Balance balance;
+    private BigDecimal balance;
 
     @ManyToOne
     @JoinColumn(name = "status_transfer_id")

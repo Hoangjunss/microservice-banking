@@ -10,7 +10,7 @@ public interface BalanceService {
     List<BalanceDTO> getAllBalances();
     BalanceDTO getBalanceById(Integer id);
     BalanceDTO createBalance(BalanceDTO balanceDTO);
-    BalanceDTO updateBalance(Integer id, BalanceDTO balanceDTO);
+    BalanceDTO updateBalance(BalanceDTO balanceDTO);
     void deleteBalance(Integer id);
 
 }

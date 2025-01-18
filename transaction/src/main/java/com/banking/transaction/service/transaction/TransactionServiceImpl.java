@@ -42,8 +42,8 @@ public class TransactionServiceImpl implements  TransactionService {
     }
 
     @Override
-    public TransactionDTO updateTransaction(Integer id, TransactionDTO transactionDTO) {
-        Transaction transaction = transactionRepository.findById(id)
+    public TransactionDTO updateTransaction(TransactionDTO transactionDTO) {
+        Transaction transaction = transactionRepository.findById(transactionDTO.getId())
                 .orElseThrow();
 
         transaction.setBalanceId(transactionDTO.getBalanceId());

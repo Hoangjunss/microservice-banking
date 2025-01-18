@@ -36,8 +36,8 @@ public class StatusActionServiceImpl implements StatusActionService {
     }
 
     @Override
-    public StatusActionDTO updateStatusAction(Integer id, StatusActionDTO statusActionDTO) {
-        StatusAction statusAction = statusActionRepository.findById(id)
+    public StatusActionDTO updateStatusAction(StatusActionDTO statusActionDTO) {
+        StatusAction statusAction = statusActionRepository.findById(statusActionDTO.getId())
                 .orElseThrow();
         statusAction.setName(statusActionDTO.getName());
         StatusAction updatedStatusAction = statusActionRepository.save(statusAction);

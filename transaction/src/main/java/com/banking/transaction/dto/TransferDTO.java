@@ -13,7 +13,7 @@ public class TransferDTO {
     private Integer id;
     private Integer idAccountSend;
     private Integer idAccountReceive;
-    private Integer idBalance;
+    private BigDecimal balance;
     private Integer idStatusTransfer;
     private LocalDateTime createAt;
 }

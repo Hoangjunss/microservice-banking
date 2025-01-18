@@ -11,7 +11,7 @@ public class TransferMapper {
         dto.setId(transfer.getId());
         dto.setIdAccountSend(transfer.getIdAccountSend());
         dto.setIdAccountReceive(transfer.getIdAccountReceive());
-        dto.setIdBalance(transfer.getBalance().getId());
+        dto.setBalance(transfer.getBalance());
         dto.setIdStatusTransfer(transfer.getStatusTransfer().getId());
         dto.setCreateAt(transfer.getCreateAt());
         return dto;
@@ -22,13 +22,7 @@ public class TransferMapper {
         transfer.setId(dto.getId());
         transfer.setIdAccountSend(dto.getIdAccountSend());
         transfer.setIdAccountReceive(dto.getIdAccountReceive());
-
-
-        if(dto.getIdBalance() != null) {
-            Balance balance = new Balance();
-            balance.setId(dto.getIdBalance());
-            transfer.setBalance(balance);
-        }
+        transfer.setBalance(dto.getBalance());
 
         if(dto.getIdStatusTransfer() != null) {
             StatusTransfer statusTransfer = new StatusTransfer();

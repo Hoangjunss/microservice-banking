@@ -42,8 +42,8 @@ public class TransferServiceImpl implements TransferService {
     }
 
     @Override
-    public TransferDTO updateTransfer(Integer id, TransferDTO transferDTO) {
-        Transfer transfer = transferRepository.findById(id)
+    public TransferDTO updateTransfer(TransferDTO transferDTO) {
+        Transfer transfer = transferRepository.findById(transferDTO.getId())
                 .orElseThrow();
 
         transfer.setIdAccountSend(transferDTO.getIdAccountSend());
@@ -56,11 +56,7 @@ public class TransferServiceImpl implements TransferService {
             transfer.setStatusTransfer(statusTransfer);
         }
 
-        if(transferDTO.getIdBalance() != null) {
-            Balance balance = balanceRepository.findById(transferDTO.getIdBalance())
-                    .orElseThrow();
-            transfer.setBalance(balance);
-        }
+        transfer.setBalance(transferDTO.getBalance());
 
         Transfer updatedTransfer = transferRepository.save(transfer);
 
