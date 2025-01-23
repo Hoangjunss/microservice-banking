@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,5 +69,10 @@ public class TransactionServiceImpl implements  TransactionService {
     @Override
     public void deleteTransaction(Integer id) {
         transactionRepository.deleteById(id);
+    }
+
+    public Integer getGenerationId() {
+        UUID uuid = UUID.randomUUID();
+        return (int) (uuid.getMostSignificantBits() & 0xFFFFFFFFL);
     }
 }

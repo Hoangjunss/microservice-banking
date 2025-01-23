@@ -1,0 +1,53 @@
+package com.banking.transaction.controller;
+
+import com.banking.transaction.dto.ApiResponse;
+import com.banking.transaction.dto.StatusTransferDTO;
+import com.banking.transaction.service.statusTransfer.StatusTransferService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/status-transfer")
+public class StatusTransferController {
+    @Autowired
+    private StatusTransferService statusTransferService;
+
+    @GetMapping()
+    public ResponseEntity<ApiResponse<List<StatusTransferDTO>>> getAllStatusTransfers() {
+        List<StatusTransferDTO> statusTransfers = statusTransferService.getAllStatusTransfers();
+        ApiResponse<List<StatusTransferDTO>> response = new ApiResponse<>(true, "Lấy danh sách thành công", statusTransfers, null);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/details")
+    public ResponseEntity<ApiResponse<StatusTransferDTO>> getStatusTransferById(@RequestParam Integer id) {
+        StatusTransferDTO statusTransfer = statusTransferService.getStatusTransferById(id);
+        ApiResponse<StatusTransferDTO> response = new ApiResponse<>(true, "Lấy thông tin thành công", statusTransfer, null);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping()
+    public ResponseEntity<ApiResponse<StatusTransferDTO>> createStatusTransfer(@RequestBody StatusTransferDTO statusTransferDTO) {
+        StatusTransferDTO statusTransfer = statusTransferService.createStatusTransfer(statusTransferDTO);
+        ApiResponse<StatusTransferDTO> response = new ApiResponse<>(true, "Tạo mới thành công", statusTransfer, null);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping()
+    public ResponseEntity<ApiResponse<StatusTransferDTO>> updateStatusTransfer(@RequestBody StatusTransferDTO statusTransferDTO) {
+        StatusTransferDTO statusTransfer = statusTransferService.updateStatusTransfer(statusTransferDTO);
+        ApiResponse<StatusTransferDTO> response = new ApiResponse<>(true, "Cập nhật thành công", statusTransfer, null);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<ApiResponse<Boolean>> deleteStatusTransfer(@RequestParam Integer id) {
+        statusTransferService.deleteStatusTransfer(id);
+        ApiResponse<Boolean> response = new ApiResponse<>(true, "Xóa thành công", Boolean.TRUE, null);
+        return ResponseEntity.ok(response);
+    }
+
+}

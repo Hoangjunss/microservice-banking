@@ -2,10 +2,13 @@ package com.banking.transaction.dto;
 
 import lombok.*;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
+
 public class StatusTransferDTO {
     private Integer id;
     private String name;
