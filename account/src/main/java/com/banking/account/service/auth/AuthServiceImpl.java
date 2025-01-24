@@ -8,6 +8,7 @@ import com.banking.account.redisson.RedisDistributedLocker;
 import com.banking.account.redisson.RedisDistributedService;
 import com.banking.account.repository.AuthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +23,8 @@ public class AuthServiceImpl implements AuthService {
     private RedisService redisService;
     @Autowired
     private RedisDistributedService redisDistributedService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<AuthDTO> getAllAuths() {
@@ -46,6 +49,7 @@ public class AuthServiceImpl implements AuthService {
            //return exception
            return null;
        }
+       auth.setPassword(passwordEncoder.encode(auth.getPassword()));
 
         return AuthMapper.toDTO(authRepository.save(auth));
     }
@@ -54,8 +58,14 @@ public class AuthServiceImpl implements AuthService {
     public AuthDTO updateAuth(Integer id, AuthDTO authDTO) {
         Auth auth = authRepository.findById(id)
                 .orElseThrow();
+
+        if (isEmailExist(auth.getEmail())){
+            //return exception
+            return null;
+        }
+        
         auth.setEmail(authDTO.getEmail());
-        auth.setPassword(authDTO.getPassword());
+        auth.setPassword(passwordEncoder.encode(auth.getPassword()));
         // Update other fields as needed
         Auth updatedAuth = authRepository.save(auth);
         return AuthMapper.toDTO(updatedAuth);
@@ -87,9 +97,9 @@ public class AuthServiceImpl implements AuthService {
             }
             //no email in redis
             //get by db
-            boolean emailExist=authRepository.findByEmail(email).isPresent();
 
             //emailExist == true
+            boolean emailExist=authRepository.findByEmail(email).isPresent();
             if(emailExist){
                 //set redis
                 redisService.hashSet(RedisContants.EMAIL_EXIST,email,true);
