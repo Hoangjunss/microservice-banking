@@ -1,16 +1,18 @@
 package com.banking.transaction.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Builder
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class ApiResponse<T> {
-    private boolean status;
+    private boolean success;
     private String message;
     private T data;
     private List<String> errors;

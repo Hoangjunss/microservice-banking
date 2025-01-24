@@ -17,7 +17,7 @@ public class BalanceController {
     private BalanceService balanceService;
 
     @GetMapping()
-    public ResponseEntity<ApiResponse<List<BalanceDTO>>> getAllBalances() {
+    public ResponseEntity<ApiResponse<?>> getAllBalances() {
         List<BalanceDTO> balances = balanceService.getAllBalances();
         ApiResponse<List<BalanceDTO>> response = new ApiResponse<>(true, "Lấy danh sách thành công", balances, null);
         return ResponseEntity.ok(response);
