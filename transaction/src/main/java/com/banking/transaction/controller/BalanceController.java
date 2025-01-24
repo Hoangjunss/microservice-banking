@@ -16,6 +16,10 @@ public class BalanceController {
     @Autowired
     private BalanceService balanceService;
 
+    /**
+     * Get all balances
+     * @return ResponseEntity<ApiResponse<?>>
+     */
     @GetMapping()
     public ResponseEntity<ApiResponse<?>> getAllBalances() {
         List<BalanceDTO> balances = balanceService.getAllBalances();
@@ -23,6 +27,11 @@ public class BalanceController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Get balance by id
+     * @param id
+     * @return ResponseEntity<ApiResponse<?>>
+     */
     @GetMapping("/details")
     public ResponseEntity<ApiResponse<BalanceDTO>> getBalanceById(@RequestParam Integer id) {
         BalanceDTO balance = balanceService.getBalanceById(id);
@@ -30,6 +39,11 @@ public class BalanceController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Create balance
+     * @param balanceDTO
+     * @return ResponseEntity<ApiResponse<BalanceDTO>>
+     */
     @PostMapping()
     public ResponseEntity<ApiResponse<BalanceDTO>> createBalance(@RequestBody BalanceDTO balanceDTO) {
         BalanceDTO balance = balanceService.createBalance(balanceDTO);
@@ -37,6 +51,11 @@ public class BalanceController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Update balance
+     * @param balanceDTO
+     * @return ResponseEntity<ApiResponse<BalanceDTO>>
+     */
     @PatchMapping()
     public ResponseEntity<ApiResponse<BalanceDTO>> updateBalance(@RequestBody BalanceDTO balanceDTO) {
         BalanceDTO balance = balanceService.updateBalance(balanceDTO);
@@ -44,6 +63,11 @@ public class BalanceController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Delete balance
+     * @param id
+     * @return ResponseEntity<ApiResponse<Boolean>>
+     */
     @DeleteMapping()
     public ResponseEntity<ApiResponse<Boolean>> deleteBalance(@RequestParam Integer id) {
         balanceService.deleteBalance(id);

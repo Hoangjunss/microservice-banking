@@ -17,6 +17,10 @@ public class TransactionController {
         @Autowired
         private TransactionService transactionService;
 
+        /**
+         * Get all transactions
+         * @return ResponseEntity<ApiResponse<?>>
+         */
         @GetMapping()
         public ResponseEntity<ApiResponse<List<TransactionDTO>>> getAllTransactions() {
             List<TransactionDTO> transactions = transactionService.getAllTransactions();
@@ -24,6 +28,11 @@ public class TransactionController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Get transaction by id
+         * @param id
+         * @return ResponseEntity<ApiResponse<?>>
+         */
         @GetMapping("/details")
         public ResponseEntity<ApiResponse<TransactionDTO>> getTransactionById(@RequestParam Integer id) {
             TransactionDTO transaction = transactionService.getTransactionById(id);
@@ -31,6 +40,11 @@ public class TransactionController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Create transaction
+         * @param transactionDTO
+         * @return ResponseEntity<ApiResponse<TransactionDTO>>
+         */
         @PostMapping()
         public ResponseEntity<ApiResponse<TransactionDTO>> createTransaction(@RequestBody TransactionDTO transactionDTO) {
             TransactionDTO transaction = transactionService.createTransaction(transactionDTO);
@@ -38,6 +52,11 @@ public class TransactionController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Update transaction
+         * @param transactionDTO
+         * @return ResponseEntity<ApiResponse<TransactionDTO>>
+         */
         @PatchMapping()
         public ResponseEntity<ApiResponse<TransactionDTO>> updateTransaction(@RequestBody TransactionDTO transactionDTO) {
             TransactionDTO transaction = transactionService.updateTransaction(transactionDTO);
@@ -45,6 +64,11 @@ public class TransactionController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Delete transaction
+         * @param id
+         * @return ResponseEntity<ApiResponse<Boolean>>
+         */
         @DeleteMapping()
         public ResponseEntity<ApiResponse<Boolean>> deleteTransaction(@RequestParam Integer id) {
             transactionService.deleteTransaction(id);

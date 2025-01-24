@@ -16,6 +16,10 @@ public class StatusTransactionController {
         @Autowired
         private StatusTransactionService statusTransactionService;
 
+        /**
+         * Get all status transactions
+         * @return ResponseEntity<ApiResponse<?>>
+         */
         @GetMapping()
         public ResponseEntity<ApiResponse<List<StatusTransactionDTO>>> getAllStatusTransactions() {
             List<StatusTransactionDTO> statusTransactions = statusTransactionService.getAllStatusTransactions();
@@ -23,6 +27,11 @@ public class StatusTransactionController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Get status transaction by id
+         * @param id
+         * @return ResponseEntity<ApiResponse<?>>
+         */
         @GetMapping("/details")
         public ResponseEntity<ApiResponse<StatusTransactionDTO>> getStatusTransactionById(@RequestParam Integer id) {
             StatusTransactionDTO statusTransaction = statusTransactionService.getStatusTransactionById(id);
@@ -30,6 +39,11 @@ public class StatusTransactionController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Create status transaction
+         * @param statusTransactionDTO
+         * @return ResponseEntity<ApiResponse<StatusTransactionDTO>>
+         */
         @PostMapping()
         public ResponseEntity<ApiResponse<StatusTransactionDTO>> createStatusTransaction(@RequestBody StatusTransactionDTO statusTransactionDTO) {
             StatusTransactionDTO statusTransaction = statusTransactionService.createStatusTransaction(statusTransactionDTO);
@@ -37,6 +51,11 @@ public class StatusTransactionController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Update status transaction
+         * @param statusTransactionDTO
+         * @return ResponseEntity<ApiResponse<StatusTransactionDTO>>
+         */
         @PatchMapping()
         public ResponseEntity<ApiResponse<StatusTransactionDTO>> updateStatusTransaction(@RequestBody StatusTransactionDTO statusTransactionDTO) {
             StatusTransactionDTO statusTransaction = statusTransactionService.updateStatusTransaction(statusTransactionDTO);
@@ -44,6 +63,11 @@ public class StatusTransactionController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Delete status transaction
+         * @param id
+         * @return ResponseEntity<ApiResponse<Boolean>>
+         */
         @DeleteMapping()
         public ResponseEntity<ApiResponse<Boolean>> deleteStatusTransaction(@RequestParam Integer id) {
             statusTransactionService.deleteStatusTransaction(id);

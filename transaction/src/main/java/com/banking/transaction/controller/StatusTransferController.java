@@ -15,6 +15,10 @@ public class StatusTransferController {
     @Autowired
     private StatusTransferService statusTransferService;
 
+    /**
+     * Get all status transfers
+     * @return ResponseEntity<ApiResponse<?>>
+     */
     @GetMapping()
     public ResponseEntity<ApiResponse<List<StatusTransferDTO>>> getAllStatusTransfers() {
         List<StatusTransferDTO> statusTransfers = statusTransferService.getAllStatusTransfers();
@@ -22,6 +26,11 @@ public class StatusTransferController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Get status transfer by id
+     * @param id
+     * @return ResponseEntity<ApiResponse<?>>
+     */
     @GetMapping("/details")
     public ResponseEntity<ApiResponse<StatusTransferDTO>> getStatusTransferById(@RequestParam Integer id) {
         StatusTransferDTO statusTransfer = statusTransferService.getStatusTransferById(id);
@@ -29,6 +38,11 @@ public class StatusTransferController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Create status transfer
+     * @param statusTransferDTO
+     * @return ResponseEntity<ApiResponse<StatusTransferDTO>>
+     */
     @PostMapping()
     public ResponseEntity<ApiResponse<StatusTransferDTO>> createStatusTransfer(@RequestBody StatusTransferDTO statusTransferDTO) {
         StatusTransferDTO statusTransfer = statusTransferService.createStatusTransfer(statusTransferDTO);
@@ -36,6 +50,11 @@ public class StatusTransferController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Update status transfer
+     * @param statusTransferDTO
+     * @return ResponseEntity<ApiResponse<StatusTransferDTO>>
+     */
     @PatchMapping()
     public ResponseEntity<ApiResponse<StatusTransferDTO>> updateStatusTransfer(@RequestBody StatusTransferDTO statusTransferDTO) {
         StatusTransferDTO statusTransfer = statusTransferService.updateStatusTransfer(statusTransferDTO);
@@ -43,6 +62,11 @@ public class StatusTransferController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Delete status transfer
+     * @param id
+     * @return ResponseEntity<ApiResponse<Boolean>>
+     */
     @DeleteMapping()
     public ResponseEntity<ApiResponse<Boolean>> deleteStatusTransfer(@RequestParam Integer id) {
         statusTransferService.deleteStatusTransfer(id);

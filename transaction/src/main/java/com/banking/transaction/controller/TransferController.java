@@ -18,6 +18,10 @@ public class TransferController {
         @Autowired
         private TransferService transferService;
 
+        /**
+         * Get all transfers
+         * @return ResponseEntity<ApiResponse<List<TransferDTO>>>
+         */
         @GetMapping()
         public ResponseEntity<ApiResponse<List<TransferDTO>>> getAllTransfers() {
             List<TransferDTO> transfers = transferService.getAllTransfers();
@@ -25,6 +29,11 @@ public class TransferController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Get transfer by id
+         * @param id
+         * @return ResponseEntity<ApiResponse<TransferDTO>>
+         */
         @GetMapping("/details")
         public ResponseEntity<ApiResponse<TransferDTO>> getTransferById(@RequestParam Integer id) {
             TransferDTO transfer = transferService.getTransferById(id);
@@ -32,6 +41,11 @@ public class TransferController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Create transfer
+         * @param transferDTO
+         * @return ResponseEntity<ApiResponse<TransferDTO>>
+         */
         @PostMapping()
         public ResponseEntity<ApiResponse<TransferDTO>> createTransfer(@RequestBody TransferDTO transferDTO) {
             TransferDTO transfer = transferService.createTransfer(transferDTO);
@@ -39,6 +53,11 @@ public class TransferController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Update transfer
+         * @param transferDTO
+         * @return ResponseEntity<ApiResponse<TransferDTO>>
+         */
         @PatchMapping()
         public ResponseEntity<ApiResponse<TransferDTO>> updateTransfer(@RequestBody TransferDTO transferDTO) {
             TransferDTO transfer = transferService.updateTransfer(transferDTO);
@@ -46,6 +65,11 @@ public class TransferController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Delete transfer
+         * @param id
+         * @return ResponseEntity<ApiResponse<Boolean>>
+         */
         @DeleteMapping()
         public ResponseEntity<ApiResponse<Boolean>> deleteTransfer(@RequestParam Integer id) {
             transferService.deleteTransfer(id);

@@ -19,6 +19,10 @@ public class StatusActionController {
         @Autowired
         private StatusActionService statusActionService;
 
+        /**
+         * Get all status actions
+         * @return ResponseEntity<ApiResponse<List<StatusActionDTO>>>
+         */
         @GetMapping()
         public ResponseEntity<ApiResponse<List<StatusActionDTO>>> getAllStatusActions() {
             List<StatusActionDTO> statusActions = statusActionService.getAllStatusActions();
@@ -26,6 +30,11 @@ public class StatusActionController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Get status action by id
+         * @param id
+         * @return ResponseEntity<ApiResponse<StatusActionDTO>>
+         */
         @GetMapping("/details")
         public ResponseEntity<ApiResponse<StatusActionDTO>> getStatusActionById(@RequestParam Integer id) {
             StatusActionDTO statusAction = statusActionService.getStatusActionById(id);
@@ -33,6 +42,11 @@ public class StatusActionController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Create status action
+         * @param statusActionDTO
+         * @return ResponseEntity<ApiResponse<StatusActionDTO>>
+         */
         @PostMapping()
         public ResponseEntity<ApiResponse<StatusActionDTO>> createStatusAction(@RequestBody StatusActionDTO statusActionDTO) {
             StatusActionDTO statusAction = statusActionService.createStatusAction(statusActionDTO);
@@ -40,6 +54,11 @@ public class StatusActionController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Update status action
+         * @param statusActionDTO
+         * @return ResponseEntity<ApiResponse<StatusActionDTO>>
+         */
         @PatchMapping()
         public ResponseEntity<ApiResponse<StatusActionDTO>> updateStatusAction(@RequestBody StatusActionDTO statusActionDTO) {
             StatusActionDTO statusAction = statusActionService.updateStatusAction(statusActionDTO);
@@ -47,6 +66,11 @@ public class StatusActionController {
             return ResponseEntity.ok(response);
         }
 
+        /**
+         * Delete status action
+         * @param id
+         * @return ResponseEntity<ApiResponse<Boolean>>
+         */
         @DeleteMapping()
         public ResponseEntity<ApiResponse<Boolean>> deleteStatusAction(@RequestParam Integer id) {
             statusActionService.deleteStatusAction(id);
