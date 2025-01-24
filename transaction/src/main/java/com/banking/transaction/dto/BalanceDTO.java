@@ -14,5 +14,5 @@ public class BalanceDTO {
     private BigDecimal balance;
     private Integer accountId;
     private LocalDateTime createAt;
-    private boolean status;
+    private Boolean status;
 }

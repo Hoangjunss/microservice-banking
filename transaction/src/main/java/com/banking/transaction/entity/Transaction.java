@@ -17,6 +17,7 @@ public class Transaction {
     private Integer id;
     private Integer balanceId;
     private LocalDateTime createAt;
+    private Integer transferId;
 
     @ManyToOne
     @JoinColumn(name = "status_transaction_id")

@@ -11,9 +11,11 @@ import java.time.LocalDateTime;
 public class TransactionDTO {
     private Integer id;
     private Integer balanceId;
+    private Integer transferId;
     private LocalDateTime createAt;
 
     private Integer idStatusTransaction;
     private Integer idStatusAction;
+
 }
 

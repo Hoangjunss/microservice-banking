@@ -16,4 +16,5 @@ public class TransferDTO {
     private BigDecimal balance;
     private Integer idStatusTransfer;
     private LocalDateTime createAt;
+
 }

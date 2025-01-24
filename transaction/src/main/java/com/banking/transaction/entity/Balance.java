@@ -16,6 +16,6 @@ public class Balance {
     private Integer id;
     private Integer accountId;
     private BigDecimal balance;
-    private boolean status;
+    private Boolean status;
     private LocalDateTime createAt;
 }

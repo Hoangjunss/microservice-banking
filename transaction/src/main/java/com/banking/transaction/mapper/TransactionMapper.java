@@ -13,6 +13,7 @@ public class TransactionMapper {
         dto.setCreateAt(transaction.getCreateAt());
         dto.setIdStatusAction(transaction.getStatusAction().getId());
         dto.setIdStatusTransaction(transaction.getStatusTransaction().getId());
+        dto.setTransferId(transaction.getTransferId());
         return dto;
     }
 
@@ -21,6 +22,7 @@ public class TransactionMapper {
         transaction.setId(dto.getId());
         transaction.setBalanceId(dto.getBalanceId());
         transaction.setCreateAt(dto.getCreateAt());
+        transaction.setTransferId(dto.getTransferId());
 
         if(dto.getIdStatusAction() != null) {
             StatusAction statusAction = new StatusAction();
