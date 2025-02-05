@@ -54,9 +54,16 @@ public class StatusActionServiceImpl implements StatusActionService {
      * @throws ``EntityNotFoundException`` nếu không tìm thấy hành động trạng thái với ID đã cho.
      */
     @Override
-    public StatusActionDTO getStatusActionById(Integer id) {
+    public StatusActionDTO getStatusActionDTOById(Integer id) {
         return statusActionRepository.findById(id)
                 .map(StatusActionMapper::toDTO)
+                .orElseThrow(() -> new EntityNotFoundException("StatusAction not found with id " + id));
+    }
+
+
+    @Override
+    public StatusAction getStatusActionById(Integer id) {
+        return statusActionRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("StatusAction not found with id " + id));
     }
 

@@ -53,11 +53,17 @@ public class StatusTransferServiceImpl implements  StatusTransferService {
      * @throws `EntityNotFoundException` nếu không tìm thấy trạng thái chuyển khoản với ID đã cho.
      */
     @Override
-    public StatusTransferDTO getStatusTransferById(Integer id) {
+    public StatusTransferDTO getStatusTransferDTOById(Integer id) {
         statusTransferRepository.findById(id)
                 .map(StatusTransferMapper::toDTO)
                 .orElseThrow(() -> new EntityNotFoundException("StatusTransfer not found with id " + id));
         return null;
+    }
+
+    @Override
+    public StatusTransfer getStatusTransferById(Integer id) {
+        return statusTransferRepository.findById(id)
+                .orElseThrow();
     }
 
     /**

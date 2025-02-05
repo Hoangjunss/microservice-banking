@@ -4,6 +4,10 @@ import com.banking.transaction.dto.TransactionDTO;
 import com.banking.transaction.entity.*;
 import com.banking.transaction.mapper.TransactionMapper;
 import com.banking.transaction.repository.*;
+import com.banking.transaction.service.balance.BalanceService;
+import com.banking.transaction.service.statusAction.StatusActionService;
+import com.banking.transaction.service.statusTransaction.StatusTransactionService;
+import com.banking.transaction.service.transfer.TransferService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +21,14 @@ import java.util.stream.Collectors;
 public class TransactionServiceImpl implements  TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
-    private StatusActionRepository statusActionRepository;
-    private StatusTransactionRepository statusTransactionRepository;
-    private BalanceRepository balanceRepository;
-    private TransferRepository transferRepository;
+    @Autowired
+    private StatusActionService statusActionService;
+    @Autowired
+    private StatusTransactionService statusTransactionService;
+    @Autowired
+    private BalanceService balanceService;
+    @Autowired
+    private TransferService transferService;
 
     /**
      * Lấy danh sách tất cả các giao dịch (`Transaction`)
@@ -132,12 +140,6 @@ public class TransactionServiceImpl implements  TransactionService {
         if(transactionDTO.getIdStatusTransaction() == null) {
             return null;
         }
-        if(!statusActionRepository.existsById(transactionDTO.getIdStatusAction())) {
-            return null;
-        }
-        if(!statusTransactionRepository.existsById(transactionDTO.getIdStatusTransaction())) {
-            return null;
-        }
         if(!transactionRepository.existsById(transactionDTO.getId())) {
             return null;
         }
@@ -150,39 +152,34 @@ public class TransactionServiceImpl implements  TransactionService {
 
         // Cập nhật trạng thái hành động
         if (transactionDTO.getIdStatusAction() != null) {
-            StatusAction statusAction = statusActionRepository.findById(transactionDTO.getIdStatusAction())
-                    .orElseThrow(() -> new EntityNotFoundException("StatusAction not found with id " + transactionDTO.getIdStatusAction()));
+            StatusAction statusAction = statusActionService.getStatusActionById(transactionDTO.getIdStatusAction());
             transaction.setStatusAction(statusAction);
         }
 
         // Cập nhật trạng thái giao dịch
         if (transactionDTO.getIdStatusTransaction() != null) {
-            StatusTransaction statusTransaction = statusTransactionRepository.findById(transactionDTO.getIdStatusTransaction())
-                    .orElseThrow(() -> new EntityNotFoundException("StatusTransaction not found with id " + transactionDTO.getIdStatusTransaction()));
+            StatusTransaction statusTransaction = statusTransactionService.getStatusTransactionById(transactionDTO.getIdStatusTransaction());
             transaction.setStatusTransaction(statusTransaction);
         }
 
         // Cập nhật số dư
         if(transactionDTO.getBalanceId() != null) {
-            Balance balance = balanceRepository.findById(transactionDTO.getBalanceId())
-                    .orElseThrow(() -> new EntityNotFoundException("Balance not found with id " + transactionDTO.getBalanceId()));
+
+            Balance balance = balanceService.getBalanceById(transactionDTO.getBalanceId());
 
             // lấy số dư hiện tại
             BigDecimal currentBalance = balance.getBalance();
 
             if(transactionDTO.getTransferId() != null) {
-                Transfer transfer = transferRepository.findById(transactionDTO.getTransferId())
-                        .orElseThrow(() -> new EntityNotFoundException("Transfer not found with id " + transactionDTO.getTransferId()));
+                Transfer transfer = transferService.getTransferById(transactionDTO.getTransferId());
 
-                Balance senderBalance = balanceRepository.findByAccountId(transfer.getIdAccountSend())
-                        .orElseThrow(() -> new EntityNotFoundException("Balance not found with id " +transfer.getIdAccountSend()));
+                Balance senderBalance = balanceService.getBalanceByAccountId(transfer.getIdAccountSend());
                 senderBalance.setBalance(senderBalance.getBalance().subtract(transfer.getBalance()));
-                balanceRepository.save(senderBalance);
+                balanceService.updateBalance(senderBalance);
 
-                Balance receiverBalance = balanceRepository.findById(transfer.getIdAccountReceive())
-                        .orElseThrow(() -> new EntityNotFoundException("Receiver account not found"));
+                Balance receiverBalance = balanceService.getBalanceByAccountId(transfer.getIdAccountReceive());
                 receiverBalance.setBalance(receiverBalance.getBalance().add(transfer.getBalance()));
-                balanceRepository.save(receiverBalance);
+                balanceService.updateBalance(receiverBalance);
             }
         }
         Transaction updatedTransaction = transactionRepository.save(transaction);

@@ -54,11 +54,18 @@ public class StatusTransactionServiceImpl implements StatusTransactionService {
      * @throws `EntityNotFoundException` nếu không tìm thấy trạng thái giao dịch với ID đã cho.
      */
     @Override
-    public StatusTransactionDTO getStatusTransactionById(Integer id) {
+    public StatusTransactionDTO getStatusTransactionDTOById(Integer id) {
         return statusTransactionRepository.findById(id)
                 .map(StatusTransactionMapper::toDTO)
                 .orElseThrow(() -> new EntityNotFoundException("StatusTransaction not found with id " + id));
     }
+
+    @Override
+    public StatusTransaction getStatusTransactionById(Integer id) {
+        return statusTransactionRepository.findById(id)
+                .orElseThrow();
+    }
+
 
     /**
      * Tạo mới trạng thái giao dịch (`StatusTransaction`)

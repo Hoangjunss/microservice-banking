@@ -54,10 +54,22 @@ public class BalanceServiceImpl implements  BalanceService {
      * @throws `EntityNotFoundException` nếu không tìm thấy số dư với ID đã cho.
      */
     @Override
-    public BalanceDTO getBalanceById(Integer id) {
+    public BalanceDTO getBalanceDTOById(Integer id) {
         return balanceRepository.findById(id)
                 .map(BalanceMapper::toDTO)
                 .orElseThrow(() -> new EntityNotFoundException("Balance not found with id " + id));
+    }
+
+    @Override
+    public Balance getBalanceById(Integer id) {
+        return balanceRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Balance not found with id " + id));
+    }
+
+    @Override
+    public Balance getBalanceByAccountId(Integer accountId) {
+        return balanceRepository.findByAccountId(accountId)
+                .orElseThrow(() -> new EntityNotFoundException("Balance not found with accountId " + accountId));
     }
 
     /**
@@ -126,6 +138,14 @@ public class BalanceServiceImpl implements  BalanceService {
         BalanceMapper.updateBalance(balance, balanceDTO);
         Balance updatedBalance = balanceRepository.save(balance);
         return BalanceMapper.toDTO(updatedBalance);
+    }
+
+    @Override
+    public void updateBalance(Balance updatedBalance) {
+        if(updatedBalance.getId() == null) {
+            throw new EntityNotFoundException("Balance not found with id " + updatedBalance.getId());
+        }
+        balanceRepository.save(updatedBalance);
     }
 
     /**

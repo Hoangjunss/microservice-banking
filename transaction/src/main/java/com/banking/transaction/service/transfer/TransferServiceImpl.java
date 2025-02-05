@@ -8,6 +8,8 @@ import com.banking.transaction.mapper.TransferMapper;
 import com.banking.transaction.repository.BalanceRepository;
 import com.banking.transaction.repository.StatusTransferRepository;
 import com.banking.transaction.repository.TransferRepository;
+import com.banking.transaction.service.balance.BalanceService;
+import com.banking.transaction.service.statusTransfer.StatusTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +22,10 @@ import java.util.stream.Collectors;
 public class TransferServiceImpl implements TransferService {
     @Autowired
     private TransferRepository transferRepository;
-    private StatusTransferRepository statusTransferRepository;
-    private BalanceRepository balanceRepository;
+    @Autowired
+    private StatusTransferService statusTransferService;
+    @Autowired
+    private BalanceService balanceService;
 
     /**
      * Lấy danh sách tất cả các giao dịch chuyển tiền.
@@ -61,12 +65,17 @@ public class TransferServiceImpl implements TransferService {
      * @throws ``NoSuchElementException`` nếu không tìm thấy giao dịch chuyển tiền với ID đã cho.
      */
     @Override
-    public TransferDTO getTransferById(Integer id) {
+    public TransferDTO getTransferDTOById(Integer id) {
         return transferRepository.findById(id)
                 .map(TransferMapper::toDTO)
                 .orElseThrow(() -> new NoSuchElementException("Transfer not found with id " + id));
     }
 
+    @Override
+    public Transfer getTransferById(Integer id) {
+        return transferRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Transfer not found with id " + id));
+    }
     /**
      * Tạo một giao dịch chuyển tiền mới.
      *
@@ -143,15 +152,12 @@ public class TransferServiceImpl implements TransferService {
 
         // Kiểm tra trạng thái giao dịch có tồn tại không
         if(transferDTO.getIdStatusTransfer() != null) {
-            StatusTransfer statusTransfer = statusTransferRepository.findById(transferDTO.getIdStatusTransfer())
-                    .orElseThrow(() -> new NoSuchElementException("Status Transfer not found with id " + transferDTO.getIdStatusTransfer()));
-
+            StatusTransfer statusTransfer = statusTransferService.getStatusTransferById(transferDTO.getIdStatusTransfer());
         }
 
         // Kiểm tra tài khoản gửi có tồn tại không
         if (transferDTO.getIdAccountSend() != null) {
-            Balance balanceSender = balanceRepository.findByAccountId(transferDTO.getIdAccountSend())
-                    .orElseThrow(() -> new NoSuchElementException("Sender account not found with id " + transferDTO.getIdAccountSend()));
+            Balance balanceSender = balanceService.getBalanceByAccountId(transferDTO.getIdAccountSend());
 
             // Kiểm tra xem số dư có được truyền vào không
             if (transferDTO.getBalance() != null) {
@@ -162,20 +168,19 @@ public class TransferServiceImpl implements TransferService {
 
                 // Cập nhật số dư tài khoản gửi
                 balanceSender.setBalance(balanceSender.getBalance().subtract(transferDTO.getBalance())); // Trừ số dư
-                balanceRepository.save(balanceSender);
+                balanceService.updateBalance(balanceSender);
             }
         }
 
         // Kiểm tra tài khoản nhận có tồn tại không
         if (transferDTO.getIdAccountReceive() != null) {
-            Balance balanceReceiver = balanceRepository.findByAccountId(transferDTO.getIdAccountReceive())
-                    .orElseThrow(() -> new NoSuchElementException("Receiver account not found with id " + transferDTO.getIdAccountReceive()));
+            Balance balanceReceiver = balanceService.getBalanceByAccountId(transferDTO.getIdAccountReceive());
 
             // Kiểm tra xem số dư có được truyền vào không
             if (transferDTO.getBalance() != null) {
                 // Cập nhật số dư tài khoản nhận
                 balanceReceiver.setBalance(balanceReceiver.getBalance().add(transferDTO.getBalance())); // Cộng số dư
-                balanceRepository.save(balanceReceiver);
+                balanceService.updateBalance(balanceReceiver);
             }
         }
 

@@ -37,7 +37,7 @@ public class StatusActionController {
          */
         @GetMapping("/details")
         public ResponseEntity<ApiResponse<StatusActionDTO>> getStatusActionById(@RequestParam Integer id) {
-            StatusActionDTO statusAction = statusActionService.getStatusActionById(id);
+            StatusActionDTO statusAction = statusActionService.getStatusActionDTOById(id);
             ApiResponse<StatusActionDTO> response = new ApiResponse<>(true, "Lấy thông tin thành công", statusAction, null);
             return ResponseEntity.ok(response);
         }

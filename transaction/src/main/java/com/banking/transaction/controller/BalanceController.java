@@ -34,7 +34,7 @@ public class BalanceController {
      */
     @GetMapping("/details")
     public ResponseEntity<ApiResponse<BalanceDTO>> getBalanceById(@RequestParam Integer id) {
-        BalanceDTO balance = balanceService.getBalanceById(id);
+        BalanceDTO balance = balanceService.getBalanceDTOById(id);
         ApiResponse<BalanceDTO> response = new ApiResponse<>(true, "Lấy thông tin thành công", balance, null);
         return ResponseEntity.ok(response);
     }

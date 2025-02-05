@@ -36,7 +36,7 @@ public class TransferController {
          */
         @GetMapping("/details")
         public ResponseEntity<ApiResponse<TransferDTO>> getTransferById(@RequestParam Integer id) {
-            TransferDTO transfer = transferService.getTransferById(id);
+            TransferDTO transfer = transferService.getTransferDTOById(id);
             ApiResponse<TransferDTO> response = new ApiResponse<>(true, "Lấy thông tin thành công", transfer, null);
             return ResponseEntity.ok(response);
         }

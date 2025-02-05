@@ -33,7 +33,7 @@ public class StatusTransferController {
      */
     @GetMapping("/details")
     public ResponseEntity<ApiResponse<StatusTransferDTO>> getStatusTransferById(@RequestParam Integer id) {
-        StatusTransferDTO statusTransfer = statusTransferService.getStatusTransferById(id);
+        StatusTransferDTO statusTransfer = statusTransferService.getStatusTransferDTOById(id);
         ApiResponse<StatusTransferDTO> response = new ApiResponse<>(true, "Lấy thông tin thành công", statusTransfer, null);
         return ResponseEntity.ok(response);
     }
